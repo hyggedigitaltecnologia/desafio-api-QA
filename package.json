@@ -1,0 +1,43 @@
+{
+  "name": "desafio-api-qa",
+  "version": "1.0.0",
+  "description": "Projeto de automação de testes de API REST com Cypress - ServeRest API",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run",
+    "test:chrome": "cypress run --browser chrome",
+    "test:firefox": "cypress run --browser firefox",
+    "test:edge": "cypress run --browser edge",
+    "test:headed": "cypress run --headed",
+    "cy:open": "cypress open",
+    "cy:open:electron": "cypress open --browser electron",
+    "cy:open:chrome": "cypress open --browser chrome",
+    "cy:open:edge": "cypress open --browser edge",
+    "cy:run": "cypress run",
+    "cy:run:spec": "cypress run --spec",
+    "test:login": "cypress run --spec 'cypress/e2e/auth/*.cy.js'",
+    "test:usuarios": "cypress run --spec 'cypress/e2e/usuario/*.cy.js'",
+    "test:produtos": "cypress run --spec 'cypress/e2e/produtos/*.cy.js'",
+    "test:carrinhos": "cypress run --spec 'cypress/e2e/carrinhos/*.cy.js'",
+    "cy:open:cache-local": "CYPRESS_CACHE_FOLDER=./tmp/cypress-cache cypress open",
+    "cy:open:chrome:safe": "cross-env CYPRESS_INTERNAL_FORCE_CHROME_USER_DATA_DIR=1 cypress open --browser chrome"
+  },
+  "keywords": [
+    "cypress",
+    "api",
+    "testing",
+    "automation",
+    "qa",
+    "serverest"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^8.3.1",
+    "cypress": "^15.7.1",
+    "cross-env": "^7.0.3"
+  },
+  "dependencies": {
+    "cypress-mochawesome-reporter": "^3.8.1"
+  }
+}

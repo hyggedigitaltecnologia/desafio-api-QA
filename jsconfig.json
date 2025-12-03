@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "types": ["cypress"],
+    "target": "es5",
+    "lib": ["es5", "dom"],
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "strict": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node"
+  },
+  "include": [
+    "cypress/**/*.js",
+    "cypress.config.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

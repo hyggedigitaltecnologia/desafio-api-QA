@@ -1,0 +1,20 @@
+{
+  "usuarios": [
+    {
+      "nome": "Fulano da Silva",
+      "email": "fulano@qa.com.br",
+      "password": "teste",
+      "administrador": "true"
+    },
+    {
+      "nome": "Beltrano Souza",
+      "email": "beltrano@qa.com.br",
+      "password": "teste",
+      "administrador": "false"
+    }
+  ],
+  "credenciaisInvalidas": {
+    "email": "usuario_inexistente@teste.com",
+    "password": "senha_errada"
+  }
+}
