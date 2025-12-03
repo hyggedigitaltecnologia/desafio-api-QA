@@ -1,63 +1,79 @@
-name: API Tests - Auto Run
-run-name: API Tests - Automated Run
+name: Manual Run - API Tests
+run-name: Manual Run - API Tests by @${{ github.actor }}
 
 on:
-  push:
-    branches: [ main, master ]
-  pull_request:
+  workflow_dispatch:
+    inputs:
+      spec:
+        type: choice
+        description: Qual suíte de testes executar?
+        required: true
+        default: all
+        options:
+          - all
+          - login
+          - usuarios
+          - produtos
+          - carrinhos
 
 jobs:
-  api-tests:
+  manual-api-tests:
     runs-on: ubuntu-latest
-    
+
     permissions:
       contents: read
       checks: write
       pull-requests: write
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm install
-      
-      - name: Run Cypress API tests
+
+      - name: Run Cypress API tests (manual scope)
         uses: cypress-io/github-action@v6
         with:
           browser: electron
           config-file: cypress.config.js
-          spec: cypress/e2e/**/*.cy.js
+          spec: ${{ 
+            inputs.spec == 'all' && 'cypress/e2e/**/*.cy.js' ||
+            inputs.spec == 'login' && 'cypress/e2e/auth/*.cy.js' ||
+            inputs.spec == 'usuarios' && 'cypress/e2e/usuario/*.cy.js' ||
+            inputs.spec == 'produtos' && 'cypress/e2e/produtos/*.cy.js' ||
+            inputs.spec == 'carrinhos' && 'cypress/e2e/carrinhos/*.cy.js'
+          }}
         env:
           CYPRESS_BASE_URL: https://serverest.dev
-      
+
       - name: Package test artifacts
         if: always()
         run: |
           mkdir -p artifact
           cp -r cypress/reports artifact/reports || true
           cp -r cypress/screenshots artifact/screenshots || true
-      
+
       - name: Upload test artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: api-test-results
+          name: manual-run-results-${{ inputs.spec }}
           path: artifact
           retention-days: 30
-      
+
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v4
         if: always()
         with:
           report_paths: 'cypress/reports/*.xml'
-          check_name: API Test Report
+          check_name: Manual API Test Report - ${{ inputs.spec }}
           fail_on_failure: false
           include_passed: true
           detailed_summary: true
